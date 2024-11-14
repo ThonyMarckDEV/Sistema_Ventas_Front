@@ -6,7 +6,7 @@ const checkTokenInterval = 60000; // Verificación cada 60 segundos
 const expirationThreshold = 120;   // Intento de renovación si quedan 2 minutos o menos
 
 document.addEventListener("DOMContentLoaded", function() {
-    console.log("Iniciando verificación de token almacenado...");
+   // console.log("Iniciando verificación de token almacenado...");
 
     // Verificación inicial del token
     if (!token) {
@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", function() {
     console.log("ID de usuario:", idUsuario);
 
     async function checkUserStatus() {
-        console.log("Verificando estado del usuario con la API...");
+      //  console.log("Verificando estado del usuario con la API...");
         try {
             const response = await fetch(`${API_BASE_URL}/api/check-status`, {
                 method: "POST",
@@ -35,7 +35,7 @@ document.addEventListener("DOMContentLoaded", function() {
     
             if (response.ok) {
                 const data = await response.json();
-                console.log("Respuesta de estado recibida:", data);
+           //     console.log("Respuesta de estado recibida:", data);
     
                 // Solo desloguea si el estado es loggedOff o el token es inválido y el usuario está activo
                 if (data.status === 'loggedOff' || (data.status === 'loggedOnInvalidToken' && !data.isTokenValid)) {
@@ -57,15 +57,15 @@ document.addEventListener("DOMContentLoaded", function() {
 
     function verifyUserRole() {
         const currentPath = window.location.pathname;
-        console.log("Verificando rol del usuario con la ruta actual:", currentPath);
+      //  console.log("Verificando rol del usuario con la ruta actual:", currentPath);
 
         if ((currentPath.includes("/ADMINPHP") && rol !== "admin") ||
             (currentPath.includes("/CLIENTEPHP") && rol !== "cliente")) {
-            console.log("Acceso no autorizado: usuario sin rol adecuado. Redirigiendo...");
+       //     console.log("Acceso no autorizado: usuario sin rol adecuado. Redirigiendo...");
             alert("Acceso no autorizado. Redirigiendo...");
             logoutAndRedirect();
         } else {
-            console.log("Acceso autorizado para el rol:", rol);
+       //     console.log("Acceso autorizado para el rol:", rol);
         }
     }
 
@@ -103,21 +103,21 @@ document.addEventListener("DOMContentLoaded", function() {
 
             if (response.ok) {
                 const data = await response.json();
-                console.log("Token renovado");
+       //         console.log("Token renovado");
                 localStorage.setItem('jwt', data.accessToken); 
             } else {
-                console.log("Error al renovar el token, cerrando sesión...");
+        //        console.log("Error al renovar el token, cerrando sesión...");
                 logoutAndRedirect();
             }
         } catch (error) {
-            console.error("Excepción al renovar el token:", error);
+        //    console.error("Excepción al renovar el token:", error);
             logoutAndRedirect();
         }
         isRenewingToken = false;
     }
 
     function checkAndRenewToken() {
-        console.log("Verificando Token almacenado");
+    //    console.log("Verificando Token almacenado");
         const token = localStorage.getItem('jwt');
 
         if (!token) {
