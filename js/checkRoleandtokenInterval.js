@@ -19,8 +19,8 @@ document.addEventListener("DOMContentLoaded", function() {
     const rol = decodedToken.rol;
     const idUsuario = decodedToken.idUsuario;
 
-    console.log("Rol del usuario:", rol);
-    console.log("ID de usuario:", idUsuario);
+   // console.log("Rol del usuario:", rol);
+   // console.log("ID de usuario:", idUsuario);
 
     async function checkUserStatus() {
       //  console.log("Verificando estado del usuario con la API...");
@@ -39,10 +39,10 @@ document.addEventListener("DOMContentLoaded", function() {
     
                 // Solo desloguea si el estado es loggedOff o el token es inválido y el usuario está activo
                 if (data.status === 'loggedOff' || (data.status === 'loggedOnInvalidToken' && !data.isTokenValid)) {
-                    console.log("Estado del usuario/token inválido. Redirigiendo al login...");
+                  //  console.log("Estado del usuario/token inválido. Redirigiendo al login...");
                     logoutAndRedirect();
                 } else if (data.status === 'loggedOn' && data.isTokenValid) {
-                    console.log("Estado del usuario activo y token válido. Procediendo a verificar rol...");
+                  //  console.log("Estado del usuario activo y token válido. Procediendo a verificar rol...");
                     verifyUserRole();
                 }
             } else {
