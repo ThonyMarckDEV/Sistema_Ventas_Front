@@ -1,0 +1,10 @@
+# Bloquear acceso directo al listado de directorios
+Options -Indexes
+
+# Habilitar el módulo de reescritura de URLs
+RewriteEngine On
+
+# Si el usuario intenta acceder a una ruta en ADMINPHP, CLIENTEPHP o  sin un token JWT, redirige a index.php
+RewriteCond %{REQUEST_URI} ^/PHP/(ADMINPHP|CLIENTEPHP)/ [NC]
+RewriteCond %{HTTP_COOKIE} !jwt=.+ [NC]
+RewriteRule ^ /index.php [R=302,L]
