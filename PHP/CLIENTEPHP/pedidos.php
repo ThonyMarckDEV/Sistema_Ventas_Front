@@ -126,21 +126,20 @@
     </div>
 </div>
 
-
-        <!-- Modal de Estado -->
-        <div id="estadoModal" class="hidden fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-            <div class="bg-white rounded-lg w-11/12 md:w-1/2 lg:w-2/3 p-6 relative">
-                <button id="closeEstadoModal" class="absolute top-2 right-2 text-gray-500 hover:text-gray-700">
-                    <i class="fas fa-times"></i>
-                </button>
-                <h2 class="text-xl font-bold mb-4">Estado del Pedido</h2>
-                
-                <!-- Línea de Tiempo -->
-                <div id="timeline" class="flex justify-between space-x-4">
-                    <!-- Los estados de la línea de tiempo se generarán dinámicamente -->
-                </div>
+    <!-- Modal de Estado -->
+    <div id="estadoModal" class="hidden fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+        <div class="bg-white rounded-lg w-full max-w-xs md:max-w-md lg:max-w-lg p-4 md:p-6 relative overflow-y-auto">
+            <button id="closeEstadoModal" class="absolute top-2 right-2 text-gray-500 hover:text-gray-700">
+                <i class="fas fa-times"></i>
+            </button>
+            <h2 class="text-lg md:text-xl font-bold mb-4 text-center">Estado del Pedido</h2>
+            
+            <!-- Línea de Tiempo -->
+            <div id="timeline" class="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0 md:space-x-4">
+                <!-- Los estados de la línea de tiempo se generarán dinámicamente -->
             </div>
         </div>
+    </div>
 
     <!-- Script para cargar pedidos -->
     <script type="module" src="../../js/pedido.js"></script>

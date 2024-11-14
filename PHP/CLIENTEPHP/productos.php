@@ -58,8 +58,6 @@
             </div>
 
         </div>
-
-        
     </div>
     
 <!-- Modal agregar carrito -->

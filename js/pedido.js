@@ -96,64 +96,6 @@ async function fetchPedidos() {
     }
 }
 
-// function renderPedidos(pedidos) {
-//     pedidosTableBody.innerHTML = '';
-
-//     pedidos.forEach((pedido) => {
-//         const tr = document.createElement('tr');
-
-//         // ID Pedido
-//         const tdIdPedido = document.createElement('td');
-//         tdIdPedido.textContent = pedido.idPedido;
-//         tdIdPedido.className = 'py-3 px-6 border-b';
-//         tr.appendChild(tdIdPedido);
-
-//         // Total
-//         const tdTotal = document.createElement('td');
-//         tdTotal.textContent = `S/${Number(pedido.total).toFixed(2)}`;
-//         tdTotal.className = 'py-3 px-6 border-b';
-//         tr.appendChild(tdTotal);
-
-//         // Estado
-//         const tdEstado = document.createElement('td');
-//         tdEstado.textContent = capitalizeFirstLetter(pedido.estado);
-//         tdEstado.className = pedido.estado.toLowerCase() === 'completado'
-//             ? 'py-3 px-6 border-b text-green-500 font-semibold'
-//             : 'py-3 px-6 border-b';
-//         tr.appendChild(tdEstado);
-
-//         // Acción
-//         const tdAccion = document.createElement('td');
-//         const estadosConAmbosBotones = ['aprobando', 'en preparacion', 'enviado', 'completado'];
-
-//         if (estadosConAmbosBotones.includes(pedido.estado.toLowerCase())) {
-//             const botonVerEstado = document.createElement('button');
-//             botonVerEstado.textContent = 'Ver Estado';
-//             botonVerEstado.className = `px-4 py-2 ${pedido.estado.toLowerCase() === 'completado' ? 'bg-green-500 hover:bg-green-600' : 'bg-gray-500 hover:bg-gray-600'} text-white rounded mr-2`;
-//             botonVerEstado.addEventListener('click', () => abrirEstadoModal(pedido.estado));
-
-//             const botonVerDetalles = document.createElement('button');
-//             botonVerDetalles.textContent = 'Ver Detalles';
-//             botonVerDetalles.className = `px-4 py-2 ${pedido.estado.toLowerCase() === 'completado' ? 'bg-green-500 hover:bg-green-600' : 'bg-blue-500 hover:bg-blue-600'} text-white rounded`;
-//             botonVerDetalles.addEventListener('click', () => abrirModal(pedido));
-
-//             tdAccion.appendChild(botonVerEstado);
-//             tdAccion.appendChild(botonVerDetalles);
-//         } else {
-//             const botonDetalles = document.createElement('button');
-//             botonDetalles.textContent = 'Ver Detalles';
-//             botonDetalles.className = 'px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600';
-//             botonDetalles.addEventListener('click', () => abrirModal(pedido));
-//             tdAccion.appendChild(botonDetalles);
-//         }
-
-//         tdAccion.className = 'py-3 px-6 border-b';
-//         tr.appendChild(tdAccion);
-
-//         pedidosTableBody.appendChild(tr);
-//     });
-// }
-
 
 function renderPedidos(pedidos) {
     pedidosTableBody.innerHTML = '';
@@ -493,24 +435,47 @@ function renderDetalles(detalles) {
     });
 }
 
+
 // Función para abrir el modal de estado con línea de tiempo
 function abrirEstadoModal(estadoActual) {
     const estados = ['aprobando', 'en preparacion', 'enviado', 'completado'];
     const timeline = document.getElementById('timeline');
-    timeline.innerHTML = '';
+    timeline.innerHTML = ''; // Limpiar el contenido anterior
+
+    // Diccionario de GIFs para cada estado
+    const gifs = {
+        'aprobando': '../../img/esperando.gif',
+        'en preparacion': '../../img/caja.gif',
+        'enviado': '../../img/camion.gif',
+        'completado': '../../img/completado.gif'
+    };
 
     estados.forEach((estado, index) => {
         const estadoElement = document.createElement('div');
         estadoElement.className = 'flex flex-col items-center';
+
+        // Verificar si el estado es activo o ya completado
         const isActive = estados.indexOf(estadoActual.toLowerCase()) >= index;
-        
-        estadoElement.innerHTML = `
+
+        // Crear el GIF para el estado actual o los anteriores
+        if (isActive) {
+            const gifElement = document.createElement('img');
+            gifElement.src = gifs[estado];
+            gifElement.alt = `GIF de ${estado}`;
+            gifElement.className = 'w-12 h-12 mb-2'; // Tamaño del GIF
+            estadoElement.appendChild(gifElement);
+        }
+
+        // Crear el círculo y el texto para cada estado
+        estadoElement.innerHTML += `
             <div class="w-8 h-8 flex items-center justify-center rounded-full ${isActive ? 'bg-green-500' : 'bg-gray-300'}">
                 <span class="text-white font-bold">${index + 1}</span>
             </div>
             <p class="mt-2 text-sm ${isActive ? 'text-green-600 font-semibold' : 'text-gray-600'}">${capitalizeFirstLetter(estado)}</p>
             ${index < estados.length - 1 ? '<div class="h-8 border-l-2 border-gray-300"></div>' : ''}
         `;
+        
+        // Agregar el estado (con el GIF) al contenedor de la línea de tiempo
         timeline.appendChild(estadoElement);
     });
 
